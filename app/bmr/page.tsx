@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react';
 import Image from "next/image";
-import BMR from "../../images/logo.png";
+import BMR from "../images/BMR.png";
 
 // BMR calculation formula constants
 const BMR_MALE_CONST = 5;
