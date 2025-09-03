@@ -1,11 +1,6 @@
 "use client";
-import { useState } from 'react';
-import Image from "next/image";
-import BMR from "../images/BMR.png";
 
-// BMR calculation formula constants
-const BMR_MALE_CONST = 5;
-const BMR_FEMALE_CONST = -161;
+import { useState } from 'react';
 
 // Main App component for the BMR calculator
 const App = () => {
@@ -33,12 +28,14 @@ const App = () => {
 
     setError(''); // Clear any previous errors
 
-    // Calculate BMR using the Mifflin-St Jeor equation
+    // Calculate BMR using the new formulas provided
     let bmr;
     if (gender === 'male') {
-      bmr = (10 * weightVal) + (6.25 * heightVal) - (5 * ageVal) + BMR_MALE_CONST;
+      // Formula for males: BMR = 66 + (13.7 x weight) + (5 x height) – (6.8 x age)
+      bmr = 66 + (13.7 * weightVal) + (5 * heightVal) - (6.8 * ageVal);
     } else {
-      bmr = (10 * weightVal) + (6.25 * heightVal) - (5 * ageVal) + BMR_FEMALE_CONST;
+      // Formula for females: BMR = 665 + (9.6 x weight) + (1.8 x height) – (4.7 x age)
+      bmr = 665 + (9.6 * weightVal) + (1.8 * heightVal) - (4.7 * ageVal);
     }
 
     // Update the result state, formatted to two decimal places
@@ -56,7 +53,7 @@ const App = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4 font-sans">
       {/* Main BMR Calculator Card */}
       <div className="bg-white p-8 sm:p-12 rounded-3xl shadow-2xl max-w-sm sm:max-w-md w-full space-y-6">
 
@@ -68,9 +65,11 @@ const App = () => {
 
         {/* Placeholder Image for BMR */}
         <div className="flex justify-center">
-          <Image
-                src={BMR}
-                alt="BMR" width={100} height={100} className="mx-auto rounded-full" />
+          <img
+            src="https://placehold.co/100x100/A0B9DE/000000?text=BMR"
+            alt="BMR"
+            className="mx-auto rounded-full"
+          />
         </div>
 
         {/* Input Fields and Labels */}

@@ -1,9 +1,8 @@
 "use client";
-import { useState } from 'react';
-import Image from "next/image";
-import car from "../images/CarInstallment.png";
 
-// Main App component for the car installment calculator
+import { useState } from 'react';
+
+// The main App component for the car installment calculator
 const App = () => {
   // State variables for form inputs and calculation results
   const [name, setName] = useState('');
@@ -31,23 +30,19 @@ const App = () => {
 
     setError(''); // Clear any previous errors
 
-    // Calculate the principal loan amount after down payment
+    // Calculate the down payment amount
     const downPaymentAmount = price * (down / 100);
+    // Calculate the principal loan amount
     const principal = price - downPaymentAmount;
 
-    // Calculate the monthly interest rate
-    const monthlyInterestRate = (rate / 100) / 12;
+    // Calculate total interest based on the provided formula
+    const totalInterest = (principal * rate / 100) * (term / 12);
+    
+    // Calculate total amount to be paid
+    const totalPayment = principal + totalInterest;
 
-    let monthlyPayment;
-
-    // Use a simplified formula for zero interest rate
-    if (monthlyInterestRate === 0) {
-      monthlyPayment = principal / term;
-    } else {
-      // Use the standard fixed-rate loan formula
-      const termPower = Math.pow(1 + monthlyInterestRate, term);
-      monthlyPayment = principal * (monthlyInterestRate * termPower) / (termPower - 1);
-    }
+    // Calculate monthly payment
+    const monthlyPayment = totalPayment / term;
 
     // Update the result state, formatted to two decimal places
     setResult(monthlyPayment.toFixed(2));
@@ -65,7 +60,7 @@ const App = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4 font-sans">
       {/* Main Car Installment Card */}
       <div className="bg-white p-8 sm:p-12 rounded-3xl shadow-2xl max-w-sm sm:max-w-md w-full space-y-6">
 
@@ -77,9 +72,11 @@ const App = () => {
 
         {/* Placeholder Image for Car */}
         <div className="flex justify-center">
-          <Image
-                src={car}
-                alt="Car" width={100} height={100} className="mx-auto rounded-full" />
+          <img
+            src="https://placehold.co/100x100/A0B9DE/000000?text=CAR"
+            alt="Car"
+            className="rounded-full w-24 h-24"
+          />
         </div>
 
         {/* Input Fields and Labels */}
@@ -196,7 +193,7 @@ const App = () => {
         {/* Result and Error Display */}
         <div className="text-center text-xl font-bold text-gray-700 pt-2">
           <p>
-            ค่าค่างวดรถยนต์: <span id="result-display">{result}</span>
+            ค่างวดรถยนต์: <span id="result-display">{result}</span>
           </p>
         </div>
 
